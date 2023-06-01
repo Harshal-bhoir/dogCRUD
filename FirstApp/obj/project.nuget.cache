@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "sPybxZuzX/riUOkVxuXf4wc7iCaAyUo/CMcIrrfjkNQlZdYXvaL15f82gGOiLOiXvjvM3+jqqZoNJpEani5JQw==",
+  "success": true,
+  "projectFilePath": "/Users/harshalb/Projects/FirstApp/FirstApp/FirstApp.csproj",
+  "expectedPackageFiles": [
+    "/Users/harshalb/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512",
+    "/Users/harshalb/.nuget/packages/newtonsoft.json.bson/1.0.2/newtonsoft.json.bson.1.0.2.nupkg.sha512",
+    "/Users/harshalb/.nuget/packages/newtonsoft.json.schema/3.0.15/newtonsoft.json.schema.3.0.15.nupkg.sha512"
+  ],
+  "logs": []
+}
