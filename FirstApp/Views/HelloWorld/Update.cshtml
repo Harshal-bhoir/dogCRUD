@@ -1,0 +1,37 @@
+﻿@model DogViewModel
+
+<h1>Update With A DogID</h1>
+<hr />
+<div class="row">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                <h5>Update a Dog From JSON</h5>
+            </div>
+            <div class="card-body">
+                <form asp-controller="HelloWorld" asp-action="UpdateDog" method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Enter Dog ID to be updated:</label>
+                        <input asp-for=Id type="number" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Enter Dog Name to be updated:</label>
+                        <input asp-for=Name type="text" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Enter Dog Age to be updated:</label>
+                        <input asp-for=Age type="number" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+
+            </div>
+        </div>
+
+
+    </div>
+</div>

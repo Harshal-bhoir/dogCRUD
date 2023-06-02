@@ -55,6 +55,48 @@ namespace FirstApp.Controllers
             return View();
         }
 
+        public IActionResult Update()
+        {
+            var dogVm = new DogViewModel();
+            return View(dogVm);
+        }
+
+        public IActionResult UpdateDog(DogViewModel dog)
+        {
+                dogs = new List<DogViewModel>();
+                string existString = System.IO.File.ReadAllText(@jsonPath);
+                if(existString.Length < 1)
+                {
+                    return View();
+                }
+
+                var existText = JsonSerializer.Deserialize<List<DogViewModel>>(existString);
+                foreach(var txt in existText)
+                {
+                    if(txt.Id == dog.Id)
+                    {
+                        if(dog.Name != null)
+                        {
+                            txt.Name = dog.Name;
+                        }
+                        if(dog.Age != null)
+                        {
+                            txt.Age = dog.Age;
+                        }
+                        dogs.Add(txt);
+                    }
+                    else
+                    {
+                        dogs.Add(txt);
+                    }
+                }
+
+                var jsonData = JsonSerializer.Serialize(dogs);
+                System.IO.File.WriteAllText(jsonPath, jsonData);
+
+                return RedirectToAction(nameof(Index));
+            }
+
         public IActionResult Delete()
         {
             var dogVm = new DogViewModel();
