@@ -7,19 +7,22 @@ using FirstApp.Models;
 using System.Text.Json;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace FirstApp.Controllers
 {
     public class HelloWorldController : Controller
     {
-        // GET: /<controller>/
-        private static List<DogViewModel> dogs = new List<DogViewModel>();
-        private string jsonPath = "/Users/harshalb/Projects/JsonFiles/csvjson.json";
-
+        CrudOperations ob = new CrudOperations();
+        
         public IActionResult Index()
         {
-            return View(dogs);
+            return View();
+        }
+
+        public IActionResult ViewDog()
+        {
+            List<DogViewModel> list = ob.get<DogViewModel>();
+            return View(list);
         }
 
         public IActionResult Create()
@@ -30,29 +33,8 @@ namespace FirstApp.Controllers
 
         public IActionResult CreateDog(DogViewModel dogViewModel)
         {
-            string existString = System.IO.File.ReadAllText(@jsonPath);
-            if(existString.Length > 0)
-            {
-                var existText = JsonSerializer.Deserialize<List<DogViewModel>>(existString);
-                foreach(var txt in existText)
-                {
-                    dogs.Add(txt);
-                }
-            }
-       
-            dogs.Add(dogViewModel);
-
-            var jsonData = JsonSerializer.Serialize(dogs);
-            System.IO.File.WriteAllText(jsonPath, jsonData);
-
+            ob.post<DogViewModel>(dogViewModel);
             return RedirectToAction(nameof(Index));
-        }
-
-        public IActionResult ViewDog()
-        {
-            string existString = System.IO.File.ReadAllText(@jsonPath);
-            ViewBag.Message = existString;
-            return View();
         }
 
         public IActionResult Update()
@@ -63,39 +45,9 @@ namespace FirstApp.Controllers
 
         public IActionResult UpdateDog(DogViewModel dog)
         {
-                dogs = new List<DogViewModel>();
-                string existString = System.IO.File.ReadAllText(@jsonPath);
-                if(existString.Length < 1)
-                {
-                    return View();
-                }
-
-                var existText = JsonSerializer.Deserialize<List<DogViewModel>>(existString);
-                foreach(var txt in existText)
-                {
-                    if(txt.Id == dog.Id)
-                    {
-                        if(dog.Name != null)
-                        {
-                            txt.Name = dog.Name;
-                        }
-                        if(dog.Age != null)
-                        {
-                            txt.Age = dog.Age;
-                        }
-                        dogs.Add(txt);
-                    }
-                    else
-                    {
-                        dogs.Add(txt);
-                    }
-                }
-
-                var jsonData = JsonSerializer.Serialize(dogs);
-                System.IO.File.WriteAllText(jsonPath, jsonData);
-
-                return RedirectToAction(nameof(Index));
-            }
+            ob.put<DogViewModel>(dog);
+            return RedirectToAction(nameof(Index));
+        }
 
         public IActionResult Delete()
         {
@@ -105,24 +57,7 @@ namespace FirstApp.Controllers
 
         public IActionResult DeleteDog(DogViewModel dogId)
         {
-            dogs = new List<DogViewModel>();
-            string existString = System.IO.File.ReadAllText(@jsonPath);
-            if(existString.Length < 1)
-            {
-                return View();
-            }
-
-            var existText = JsonSerializer.Deserialize<List<DogViewModel>>(existString);
-            foreach (var txt in existText)
-            {
-                if(txt.Id != dogId.Id)
-                {
-                    dogs.Add(txt);
-                }
-            }
-
-            var jsonData = JsonSerializer.Serialize(dogs);
-            System.IO.File.WriteAllText(jsonPath, jsonData);
+            ob.delete<DogViewModel>(dogId);
 
             return RedirectToAction(nameof(ViewDog));
         }
