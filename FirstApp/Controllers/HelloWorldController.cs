@@ -12,7 +12,7 @@ namespace FirstApp.Controllers
 {
     public class HelloWorldController : Controller
     {
-        CrudOperations ob = new CrudOperations();
+        CrudOps ob = new CrudOps();
         
         public IActionResult Index()
         {
@@ -21,7 +21,7 @@ namespace FirstApp.Controllers
 
         public IActionResult ViewDog()
         {
-            List<DogViewModel> list = ob.get<DogViewModel>();
+            List<DogViewModel> list = ob.get();
             return View(list);
         }
 
@@ -33,7 +33,7 @@ namespace FirstApp.Controllers
 
         public IActionResult CreateDog(DogViewModel dogViewModel)
         {
-            ob.post<DogViewModel>(dogViewModel);
+            ob.post(dogViewModel);
             return RedirectToAction(nameof(Index));
         }
 
@@ -45,7 +45,7 @@ namespace FirstApp.Controllers
 
         public IActionResult UpdateDog(DogViewModel dog)
         {
-            ob.put<DogViewModel>(dog);
+            ob.put(dog);
             return RedirectToAction(nameof(Index));
         }
 
@@ -55,9 +55,9 @@ namespace FirstApp.Controllers
             return View(dogVm);
         }
 
-        public IActionResult DeleteDog(DogViewModel dogId)
+        public IActionResult DeleteDog(DogViewModel dog)
         {
-            ob.delete<DogViewModel>(dogId);
+            ob.delete(dog.Id);
 
             return RedirectToAction(nameof(ViewDog));
         }

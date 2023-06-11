@@ -25,28 +25,51 @@ namespace FirstApp
             serializeWrite(existText);
         }
 
-        public void put<T>(T value)
+        public void put<T>(T value) where T: class, new()
         {
             var existText = deserealizeRead<T>();
 
             if (existText?.Count < 1) return;
 
-            var findDog = existText?.Find(dog => dog.Id == id);
-            if (findDog == null) return;
-            existText?.Remove(findDog);
-            existText?.Add(new () { Id = id, Age = value.Age, Name = value.Name });
+            T ob = new T();
+            var cols = ob.GetType().GetProperties();
+
+            //foreach(var col in cols)
+            //{
+            //    if(col == value.Id)
+            //    {
+
+            //    }
+            //}
+
+            //var findDog = existText?.Find(dog => dog.Id == T.id);
+            //if (findDog == null) return;
+            //existText?.Remove(findDog);
+            //existText?.Add(new T() { Id = id, Age = value.Age, Name = value.Name });
 
             serializeWrite(existText);
         }
 
-        public void delete<T>(T id)
+        public void delete<T>(int id) where T: class, new()
         {
             var existText = deserealizeRead<T>();
 
             if (existText?.Count < 1) return;
 
-            var found = existText?.Find(x => x.Id == id);
-            if (found != null) existText?.Remove(found);
+            T ob = new T();
+            var cols = ob.GetType().GetProperties();
+
+            //foreach(var dog in existText)
+            //{
+            //    var value = (int)typeof(T).GetProperty("Id").GetValue(ob);
+            //    if(value == id)
+            //    {
+            //        existText.Remove(new T(){ Id = id});
+            //    }
+            //}
+            
+            //var found = existText?.Find(x => x.Id == id);
+            //if (found != null) existText?.Remove(found);
 
             serializeWrite(existText);
         }
